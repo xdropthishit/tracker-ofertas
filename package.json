@@ -1,0 +1,14 @@
+{
+  "name": "tracker-ofertas",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "dotenv": "^17.4.1",
+    "node-cron": "^4.2.1",
+    "node-fetch": "^3.3.2",
+    "puppeteer": "^24.40.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
+    "twilio": "^5.13.1"
+  }
+}
