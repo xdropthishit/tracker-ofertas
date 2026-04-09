@@ -1,28 +1,28 @@
-const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
+import fetch from "node-fetch";
 
 (async () => {
-  const url = "https://api.mercadolibre.com/sites/MLA/search?q=ps5&limit=5";
+  const url = "https://api.mercadolibre.com/sites/MLA/search?q=ps5&limit=10";
 
-  const res = await fetch(url, {
-    headers: {
-      "User-Agent": "Mozilla/5.0",
-      "Referer": "https://www.mercadolibre.com.ar/"
-    }
-  });
+  const res = await fetch(url);
 
-  const text = await res.text();
-
-  if (text.includes("forbidden")) {
-    console.log("❌ Sigue bloqueado → vamos a solución definitiva");
+  if (!res.ok) {
+    console.log("❌ Error:", res.status);
     return;
   }
 
-  const data = JSON.parse(text);
+  const data = await res.json();
+
+  if (!data.results) {
+    console.log("❌ Sin resultados");
+    console.log(data);
+    return;
+  }
 
   const productos = data.results.map(p => ({
     titulo: p.title,
     precio: p.price,
-    link: p.permalink
+    link: p.permalink,
+    cuotas: p.installments
   }));
 
   console.log("✅ PRODUCTOS:");
